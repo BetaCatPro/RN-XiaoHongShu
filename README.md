@@ -35,6 +35,6 @@ npm run android
 
 ![image](doc_imgs/login_exp0.jpg#pic_center)
 
-![image](doc_imgs/login_exp0.jpg#pic_center)
+![image](doc_imgs/login_exp1.jpg#pic_center)
 
-![image](doc_imgs/login_exp0.jpg#pic_center)
+![image](doc_imgs/login_exp2.jpg#pic_center)
