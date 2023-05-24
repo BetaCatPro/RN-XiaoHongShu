@@ -1,16 +1,16 @@
-import React from 'react';
+import React from "react"
 import {
     StatusBar,
-} from 'react-native';
+} from "react-native"
 
 
-import {SafeAreaProvider} from "react-native-safe-area-context";
-import {NavigationContainer} from '@react-navigation/native'
-import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
+import {SafeAreaProvider} from "react-native-safe-area-context"
+import {NavigationContainer} from "@react-navigation/native"
+import {createStackNavigator, TransitionPresets} from "@react-navigation/stack"
 
-
-import PageA from './src/modules/PageA';
-import PageB from './src/modules/PageB';
+import Home from "./src/modules/home/Home"
+import Welcome from "./src/modules/welcome/Welcome"
+import Login from "./src/modules/login/Login"
 
 const Stack = createStackNavigator()
 
@@ -18,13 +18,13 @@ function App(): JSX.Element {
     return (
         <SafeAreaProvider>
             <StatusBar
-                barStyle={'dark-content'}
-                backgroundColor={'white'}
+                barStyle={"dark-content"}
+                backgroundColor={"white"}
             />
 
             <NavigationContainer>
                 <Stack.Navigator
-                    initialRouteName='PageA'
+                    initialRouteName="Welcome"
                     screenOptions={{
                         cardStyle: {
                             elevation: 1
@@ -32,16 +32,25 @@ function App(): JSX.Element {
                     }}
                 >
                     <Stack.Screen
-                        name='PageA'
-                        component={PageA}
+                        name="Welcome"
+                        component={Welcome}
                         options={{
                             headerShown: false
                         }}
                     />
 
                     <Stack.Screen
-                        name='PageB'
-                        component={PageB}
+                        name="Login"
+                        component={Login}
+                        options={{
+                            headerShown: false,
+                            ...TransitionPresets.ModalSlideFromBottomIOS
+                        }}
+                    />
+
+                    <Stack.Screen
+                        name="MainTab"
+                        component={Home}
                         options={{
                             headerShown: false,
                             ...TransitionPresets.ModalSlideFromBottomIOS
@@ -51,7 +60,7 @@ function App(): JSX.Element {
             </NavigationContainer>
 
         </SafeAreaProvider>
-    );
+    )
 }
 
-export default App;
+export default App
