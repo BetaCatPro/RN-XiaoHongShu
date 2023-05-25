@@ -33,8 +33,23 @@ npm run android
 
 登录页:
 
-![image](doc_imgs/login_exp0.jpg#pic_center)
+- <div align=center>
+    <img src="./doc_imgs/login_exp0.jpg" width="390px">
+</div>
 
-![image](doc_imgs/login_exp1.jpg#pic_center)
+- <div align=center>
+    <img src="./doc_imgs/login_exp1.jpg" width="390px">
+</div>
 
-![image](doc_imgs/login_exp2.jpg#pic_center)
+- <div align=center>
+    <img src="./doc_imgs/login_exp2.jpg" width="390px">
+</div>
+
+首页:
+- <div align=center>
+    <img src="./doc_imgs/home0.jpg" width="390px">
+</div>
+
+- <div align=center>
+    <img src="./doc_imgs/home1.jpg" width="390px">
+</div>
