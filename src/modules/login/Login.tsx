@@ -8,7 +8,6 @@ import {
     Linking,
     TextInput,
     LayoutAnimation,
-    ToastAndroid,
 } from 'react-native'
 
 import {useNavigation} from '@react-navigation/native'
@@ -16,6 +15,7 @@ import {StackNavigationProp} from '@react-navigation/stack'
 
 import {formatPhone, replaceBlank} from '../../utils/StringUtil'
 import UserStore from '../../stores/UserStore'
+import Toast from "../../components/widget/Toast"
 
 import icon_logo_main from '../../assets/icon_main_logo.png'
 import icon_unselected from '../../assets/icon_unselected.png'
@@ -53,7 +53,7 @@ export default () => {
             if (success) {
                 navigation.replace('MainTab')
             } else {
-                ToastAndroid.show('登陆失败，请检查用户名和密码', ToastAndroid.LONG)
+                Toast.show('登陆失败，请检查用户名和密码')
             }
         })
     }
