@@ -1,16 +1,26 @@
 import {request} from "../utils/request"
 import {action, flow, observable} from "mobx"
+
+import Loading from "../components/widget/Loading"
+
 import {save} from "../utils/Storage"
 
 class UserStore {
 
-    userInfo: any
+    @observable userInfo: any
+
+    @action
+    setUserInfo = (info: any) => {
+        this.userInfo = info
+    }
+
 
     requestLogin = flow(function* (
         this: UserStore,
         phone: string,
         pwd: string,
         callback: (success: boolean) => void) {
+        Loading.show()
         try {
             const params = {
                 name: phone,
@@ -31,7 +41,7 @@ class UserStore {
             this.userInfo = null
             callback?.(false)
         } finally {
-            //
+            Loading.hide()
         }
     })
 }

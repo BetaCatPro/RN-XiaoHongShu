@@ -8,9 +8,9 @@ import {SafeAreaProvider} from "react-native-safe-area-context"
 import {NavigationContainer} from "@react-navigation/native"
 import {createStackNavigator, TransitionPresets} from "@react-navigation/stack"
 
-import Home from "./src/modules/home/Home"
 import Welcome from "./src/modules/welcome/Welcome"
 import Login from "./src/modules/login/Login"
+import MainTab from "./src/modules/mainTab/MainTab"
 
 const Stack = createStackNavigator()
 
@@ -24,7 +24,8 @@ function App(): JSX.Element {
 
             <NavigationContainer>
                 <Stack.Navigator
-                    initialRouteName="Welcome"
+                    // 开发测试
+                    initialRouteName="MainTab"
                     screenOptions={{
                         cardStyle: {
                             elevation: 1
@@ -50,7 +51,7 @@ function App(): JSX.Element {
 
                     <Stack.Screen
                         name="MainTab"
-                        component={Home}
+                        component={MainTab}
                         options={{
                             headerShown: false,
                             ...TransitionPresets.ModalSlideFromBottomIOS
