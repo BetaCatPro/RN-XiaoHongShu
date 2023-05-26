@@ -11,6 +11,7 @@ import {createStackNavigator, TransitionPresets} from "@react-navigation/stack"
 import Welcome from "./src/modules/welcome/Welcome"
 import Login from "./src/modules/login/Login"
 import MainTab from "./src/modules/mainTab/MainTab"
+import ArticleDetail from "./src/modules/articleDetail/ArticleDetail"
 
 const Stack = createStackNavigator()
 
@@ -52,6 +53,15 @@ function App(): JSX.Element {
                     <Stack.Screen
                         name="MainTab"
                         component={MainTab}
+                        options={{
+                            headerShown: false,
+                            ...TransitionPresets.ModalSlideFromBottomIOS
+                        }}
+                    />
+
+                    <Stack.Screen
+                        name="ArticleDetail"
+                        component={ArticleDetail}
                         options={{
                             headerShown: false,
                             ...TransitionPresets.ModalSlideFromBottomIOS
