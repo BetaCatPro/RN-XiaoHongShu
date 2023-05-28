@@ -53,3 +53,21 @@ npm run android
 - <div align=center>
     <img src="./doc_imgs/home1.jpg" width="390px">
 </div>
+
+消息页:
+- <div align=center>
+    <img src="./doc_imgs/message0.jpg" width="390px">
+</div>
+
+- <div align=center>
+    <img src="./doc_imgs/message1.jpg" width="390px">
+</div>
+
+个人中心页:
+- <div align=center>
+    <img src="./doc_imgs/mine0.jpg" width="390px">
+</div>
+
+- <div align=center>
+    <img src="./doc_imgs/mine1.jpg" width="390px">
+</div>
