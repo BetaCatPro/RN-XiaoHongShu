@@ -1,25 +1,41 @@
-import React, {useEffect, useCallback} from "react"
+import React, { useEffect, useCallback } from "react"
 import {
     View,
     Text,
     StyleSheet,
     Dimensions,
     Image,
-    TouchableOpacity
+    TouchableOpacity,
+    Platform
 } from "react-native"
-import {useLocalStore} from "mobx-react"
+import { useLocalStore } from "mobx-react"
 import HomeStore from "./HomeStore"
-import {observer} from "mobx-react"
+import { observer } from "mobx-react"
 import FlowList from "../../components/flowlist/FlowList.js"
-import CategoryList from "./components/CategoryList"
-import TitleBar from "./components/TitleBar"
-import Heart from "../../components/Heart"
 import ResizeImage from "../../components/ResizeImage"
+import Heart from "../../components/Heart"
+import TitleBar from "./components/TitleBar"
+import CategoryList from "./components/CategoryList"
+import { save } from "../../utils/Storage"
 
-import {useNavigation} from "@react-navigation/native"
-import {StackNavigationProp} from "@react-navigation/stack"
+import { useNavigation } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import {
+    checkUpdate,
+    downloadUpdate,
+    switchVersion,
+    isFirstTime,
+    isRolledBack,
+    markSuccess,
+    switchVersionLater
+} from "react-native-update"
 
-const {width: SCREEN_WIDTH} = Dimensions.get("window")
+import _updateConfig from "../../../update.json"
+
+// @ts-ignore
+const { appKey } = _updateConfig[Platform.OS]
+
+const { width: SCREEN_WIDTH } = Dimensions.get("window")
 
 export default observer(() => {
 
@@ -30,7 +46,46 @@ export default observer(() => {
     useEffect(() => {
         store.requestHomeList()
         store.getCategoryList()
+
+        checkPatch()
+
+        if (isFirstTime) {
+            markSuccess()
+            // 补丁成功，上报服务器信息
+            // 补丁安装成功率：99.5% ~ 99.7%
+        } else if (isRolledBack) {
+            // 补丁回滚，上报服务器信息
+        }
     }, [])
+
+    // 检查补丁更新
+    const checkPatch = async () => {
+        const info: any = await checkUpdate(appKey)
+        const { update, name, description, metaInfo } = info
+        const metaJson = JSON.parse(metaInfo)
+        save("patchVersion", name)
+        const { forceUpdate } = metaJson
+        if (forceUpdate) {
+            // 弹窗提示用户
+        } else {
+            // 不弹窗默默操作
+        }
+        if (update) {
+            const hash = await downloadUpdate(
+                info,
+                {
+                    onDownloadProgress: ({ received, total }) => {},
+                },
+            )
+            if (hash) {
+                if (forceUpdate) {
+                    switchVersion(hash)
+                } else {
+                    switchVersionLater(hash)
+                }
+            }
+        }
+    }
 
     const refreshNewData = () => {
         store.resetPage()
@@ -45,16 +100,16 @@ export default observer(() => {
         navigation.push("ArticleDetail", {id: article.id})
     }, [])
 
-    const renderItem = ({item, index}: { item: ArticleSimple, index: number }) => {
+    const renderItem = ({item, index}: {item: ArticleSimple, index: number}) => {
         return (
             <TouchableOpacity
                 style={styles.item}
                 onPress={onArticlePress(item)}
             >
-                <ResizeImage uri={item.image}/>
+                <ResizeImage uri={item.image} />
                 <Text style={styles.titleTxt}>{item.title}</Text>
                 <View style={styles.nameLayout}>
-                    <Image style={styles.avatarImg} source={{uri: item.avatarUrl}}/>
+                    <Image style={styles.avatarImg} source={{ uri: item.avatarUrl }} />
                     <Text style={styles.nameTxt}>{item.userName}</Text>
                     <Heart
                         value={item.isFavorite}
@@ -74,7 +129,7 @@ export default observer(() => {
         )
     }
 
-    const categoryList = store.categoryList.filter(i => (i as any).isAdd)
+    const categoryList = store.categoryList.filter(i => i.isAdd)
     return (
         <View style={styles.root}>
             <TitleBar
@@ -87,7 +142,7 @@ export default observer(() => {
                 style={styles.flatList}
                 data={store.homeList}
                 keyExtrator={(item: ArticleSimple) => `${item.id}`}
-                extraData={[store.refreshing]}
+                extraData={[ store.refreshing ]}
                 contentContainerStyle={styles.container}
                 renderItem={renderItem}
                 numColumns={2}
@@ -95,7 +150,7 @@ export default observer(() => {
                 onRefresh={refreshNewData}
                 onEndReachedThreshold={0.1}
                 onEndReached={loadMoreData}
-                ListFooterComponent={<Footer/>}
+                ListFooterComponent={<Footer />}
                 ListHeaderComponent={
                     <CategoryList
                         categoryList={categoryList}
