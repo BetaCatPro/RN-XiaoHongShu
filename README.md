@@ -19,7 +19,7 @@ npm install
 npm run dev
 ```
 
-#### 启动客服端
+#### 启动客户端
 
 在项目根目录下运行
 
@@ -28,6 +28,8 @@ npm install
 
 npm run android
 ```
+
+tips: 需要保证 android 端能访问到 server 提供的服务
 
 ## Example Pages
 
