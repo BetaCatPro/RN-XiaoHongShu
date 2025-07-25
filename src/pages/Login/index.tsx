@@ -8,12 +8,13 @@ import {
   Linking,
   TextInput,
   LayoutAnimation,
+  ToastAndroid,
 } from 'react-native';
 
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 
-import {formatPhone} from '../../utils/StringUtil';
+import {formatPhone, replaceBlank} from '../../utils/StringUtil';
 
 import icon_logo_main from '../../assets/icon_main_logo.png';
 import icon_unselected from '../../assets/icon_unselected.png';
@@ -27,6 +28,7 @@ import icon_exchange from '../../assets/icon_exchange.png';
 import icon_wx from '../../assets/icon_wx.png';
 import icon_qq from '../../assets/icon_qq.webp';
 import icon_close_modal from '../../assets/icon_close_modal.png';
+import UserStore from '@/stores/UserStore';
 
 type _loginType = 'quick' | 'input';
 
@@ -46,7 +48,13 @@ export default () => {
       return;
     }
 
-    navigation.replace('MainTab');
+    UserStore.requestLogin(replaceBlank(phone), pwd, (success: boolean) => {
+      if (success) {
+        navigation.replace('MainTab');
+      } else {
+        ToastAndroid.show('登陆失败，请检查用户名和密码', ToastAndroid.LONG);
+      }
+    });
   };
 
   const renderQuickLogin = () => {
