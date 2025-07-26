@@ -1,7 +1,7 @@
 import {request} from '../utils/request';
 import {action, flow, observable} from 'mobx';
 
-import Loading from '../components/widget/Loading';
+import Loading from '../components/Widget/Loading';
 
 import Storage from '../utils/Storage';
 

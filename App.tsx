@@ -4,9 +4,11 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 
-import Login from './src/pages/Login';
-import Welcome from './src/pages/Welcome';
-import MainTab from './src/pages/MainTab';
+import Login from '@/pages/Login';
+import Welcome from '@/pages/Welcome';
+import MainTab from '@/pages/MainTab';
+import ArticleDetail from '@/pages/ArticleDetail';
+import SearchGoods from '@/pages/SearchGoods';
 
 const Stack = createStackNavigator();
 const App = (): React.JSX.Element => {
@@ -45,7 +47,24 @@ const App = (): React.JSX.Element => {
                 ...TransitionPresets.ModalSlideFromBottomIOS,
               }}
             />
-            <Stack.Screen name="Login" component={Login} />
+
+            <Stack.Screen
+              name="ArticleDetail"
+              component={ArticleDetail}
+              options={{
+                headerShown: false,
+                ...TransitionPresets.ModalSlideFromBottomIOS,
+              }}
+            />
+
+            <Stack.Screen
+              name="SearchGoods"
+              component={SearchGoods}
+              options={{
+                headerShown: false,
+                presentation: 'transparentModal',
+              }}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaProvider>
